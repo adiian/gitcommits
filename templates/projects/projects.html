@@ -2,4 +2,13 @@
 
 {% block content %}
 <h1>Projects</h1>
+
+{% if projects %}
+    {% for project in projects %}
+        {{ project.name }}
+    {% endfor %}
+{% else  %}
+    No listings
+{% endif  %}
+
 {% endblock %}
