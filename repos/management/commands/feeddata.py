@@ -21,10 +21,15 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         repos = Repo.objects.all()
         for repo in repos:
-            r = requests.get('https://api.github.com/repos/' + repo.name + '/stats/commit_activity')
-            repo.values = json.dumps( list( map( lambda w : w['total'], json.loads(r.text) )) )
-            repo.save()
-            self.stdout.write(self.style.SUCCESS('Retrieving "%s"' % repo.name ))
+            print(len(repo.values))
+            if len(repo.values) < 50:
+                print( 'Retrieveing ' + repo.name )
+                r = requests.get('https://api.github.com/repos/' + repo.name + '/stats/commit_activity')
+                repo.values = json.dumps( list( map( lambda w : w['total'], json.loads(r.text) )) )
+                repo.save()
+                self.stdout.write(self.style.SUCCESS('Retrieving "%s"' % repo.name ))
+            else:
+                self.stdout.write(('Skipping "%s"' % repo.name ))
 
         self.update_projects()
 
