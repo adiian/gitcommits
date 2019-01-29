@@ -10,3 +10,5 @@ local_settings.py
 db.sqlite3
 /media
 /static
+projects/migrations/0001_initial.py
+repos/migrations/0001_initial.py
